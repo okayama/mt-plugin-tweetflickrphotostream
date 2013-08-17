@@ -1,0 +1,41 @@
+id: TweetFlickrPhotostream
+name: TweetFlickrPhotostream
+key: tweetflickrphotostream
+version: 1.1
+description: <__trans phrase="Available TweetFlickrPhotostream.">
+author_name: okayama
+author_link: http://weeeblog.net/
+l10n_class: TweetFlickrPhotostream::L10N
+blog_config_template: tweetflickrphotostream_config_blog.tmpl
+settings:
+    consumer_key:
+        default: 9JHy3ooDpQDLH8RQGHfww
+        scope: system
+    consumer_secret:
+        default: WcthK1pcLTxs8iwobB5bIcYzEsxatsOR8xhXoMcprE
+        scope: system
+    access_token:
+    access_token_secret:
+    flickr_id:
+    last_updated:
+    tweet_limit:
+        default: 5
+    tweet_format:
+        default: *author* uploaded *title* to Flickr: *shorter_url* #flickr #TweetFlickrPhotostream
+applications:
+    cms:
+        methods:
+            tweetflickrphotostream_oauth: $tweetflickrphotostream::TweetFlickrPhotostream::CMS::_mode_tweetflickrphotostream_oauth
+            tweetflickrphotostream_get_access_token: $tweetflickrphotostream::TweetFlickrPhotostream::CMS::_mode_tweetflickrphotostream_get_access_token
+            tweetflickrphotostream_tweet_photo: $tweetflickrphotostream::TweetFlickrPhotostream::CMS::_mode_tweetflickrphotostream_tweet_photo
+tasks:
+    tweetflickrphotostream:
+        label: TweetFlickrPhotostream Task
+        frequency: 5
+        code: $tweetflickrphotostream::TweetFlickrPhotostream::Tasks::tweet_flickr_photostream
+tags:
+    function:
+        FlickrShorterURL: $tweetflickrphotostream::TweetFlickrPhotostream::Tags::_hdlr_flickr_shorter_url
+callbacks:
+    MT::App::CMS::template_source.dashboard: $tweetflickrphotostream::TweetFlickrPhotostream::Callbacks::_cb_ts_dashboard
+    MT::App::CMS::template_source.tweetflickrphotostream_config_blog: $tweetflickrphotostream::TweetFlickrPhotostream::Callbacks::_cb_ts_tweetflickrphotostream_config_blog

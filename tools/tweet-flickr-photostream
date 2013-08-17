@@ -1,8 +1,9 @@
 #!/usr/bin/perl -w
-
 use strict;
-use lib 'lib', '../lib';
-use lib 'extlib', '../extlib';
+use lib qw( lib ../lib );
+use lib qw( extlib ../extlib );
+use lib qw( plugins/TweetFlickrPhotostream/lib plugins/TweetFlickrPhotostream/extlib );
+
 use MT;
 
 my $photo_id = 0;
@@ -17,13 +18,15 @@ Getopt::Long::GetOptions(
 my $app = MT->instance;
 if ( my $plugin = $app->component( 'TweetFlickrPhotostream' ) ) {
     if ( $photo_id && $photo_id =~ /^[0-9]{1,}$/ ) {
+        require TweetFlickrPhotostream::Util;
         if ( $blog_id && $blog_id =~ /^[0-9]{1,}$/ ) {
-            MT::Plugin::TweetFlickrPhotostream::tweet_flickr_photostream_by_id( $photo_id, $blog_id );
+            TweetFlickrPhotostream::Util::tweet_flickr_photostream_by_id( $photo_id, $blog_id );
         } else {
-            print MT::Plugin::TweetFlickrPhotostream::get_shorter_url( $photo_id ) . "\n";
+            print TweetFlickrPhotostream::Util::shorter_url( $photo_id ) . "\n";
         }
     } else {
-        $plugin->tweet_flickr_photostream();
+        require TweetFlickrPhotostream::Tasks;
+        TweetFlickrPhotostream::Tasks::tweet_flickr_photostream();
     }
 }
 

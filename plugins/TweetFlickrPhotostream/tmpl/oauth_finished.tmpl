@@ -1,0 +1,39 @@
+<mt:include name="dialog/header.tmpl">
+
+<mt:if name="error_verification">
+  <form method="post">
+    <input type="hidden" name="__mode" value="tweetflickrphotostream_oauth" />
+    <input type="hidden" name="magic_token" value="<mt:var name="magic_token">" />
+    <input type="hidden" name="blog_id" value="<mt:var name="blog_id">" />
+    <p><__trans phrase="Authentication failed."></p>
+    <div class="actions-bar">
+      <div class="actions-bar-inner pkg actions">
+        <button
+           name="retry"
+           type="submit"
+           class="button retry action primary"
+          ><__trans phrase="Retry"></button>
+        <button
+           type="submit"
+           class="button action cancel mt-close-dialog"
+           title="<__trans phrase="Close (x)">"
+          ><__trans phrase="Close"></button>
+      </div>
+    </div>
+  </form>
+<mt:else>
+  <p><__trans phrase="Authentication finished."></p>
+  <div class="actions-bar">
+    <div class="actions-bar-inner pkg actions">
+      <button
+         onclick="parent.location.reload();"
+         type="submit"
+         accesskey="x"
+         class="button action cancel mt-close-dialog"
+         title="<__trans phrase="Close (x)">"
+        ><__trans phrase="Close"></button>
+    </div>
+  </div>
+</mt:if>
+
+<mt:include name="dialog/footer.tmpl">
